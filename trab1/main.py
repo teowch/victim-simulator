@@ -20,10 +20,13 @@ def main(data_folder_name, cfg_ag_folder):
     explorer_file = os.path.join(cfg_ag_folder, "explorer_1_config.txt")
     
     # Instantiate agents rescuer and explorer
-    resc1 = Rescuer(env, 4, rescuer_file)
-    resc2 = Rescuer(env, 4, rescuer_file)
-    resc3 = Rescuer(env, 4, rescuer_file)
-    resc4 = Rescuer(env, 4, rescuer_file)
+    resc1 = Rescuer(env, rescuer_file)
+    resc2 = Rescuer(env, rescuer_file)
+    resc3 = Rescuer(env, rescuer_file)
+    resc4 = Rescuer(env, rescuer_file)
+
+    #master_rescuer = Rescuer(env, rescuer_file, 4)   # 4 is the number of explorer agents
+    #master_rescuer.sync_explorers(explorer_maps)
 
     # Explorer needs to know rescuer to send the map
     # that's why rescuer is instatiated before

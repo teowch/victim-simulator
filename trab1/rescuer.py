@@ -28,6 +28,44 @@ class Rescuer(AbstAgent):
 
         # planning
         self.__planner()
+
+    def sync_explorers(self, explorer_maps):
+        """
+        Synchronize maps from all explorers and create a unified map.
+
+        Args:
+            explorer_maps (list): A list of maps from all explorers.
+        """
+        print(f"{self.NAME} Synchronizing maps from explorers...")
+        self.map = self.merge_maps(explorer_maps)
+        print(f"{self.NAME} Unified map created.")
+
+    def merge_maps(self, maps):
+        """
+        Merge multiple maps into a single unified map.
+
+        Args:
+            maps (list): A list of maps from explorers. Each map is a dictionary
+                         where keys are coordinates (x, y) and values are cell data.
+
+        Returns:
+            dict: A unified map containing all the information from the input maps.
+        """
+        unified_map = {}
+
+        for map_data in maps:
+            for coord, cell_data in map_data.items():
+                if coord not in unified_map:
+                    unified_map[coord] = cell_data
+                else:
+                    # Merge logic: prioritize certain data if needed
+                    if cell_data['content'] == VS.WALL or cell_data['content'] == VS.END:
+                        unified_map[coord]['content'] = cell_data['content']
+                    if cell_data['has_victim'] != VS.NO_VICTIM:
+                        unified_map[coord]['has_victim'] = cell_data['has_victim']
+                        unified_map[coord]['victim_signals'] = cell_data['victim_signals']
+
+        return unified_map
     
     def go_save_victims(self, walls, victims):
         """ The explorer sends the map containing the walls and

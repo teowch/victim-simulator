@@ -75,6 +75,7 @@ class Explorer(AbstAgent):
     
     def direction_decision(self):
         neighbors = {direction: content for direction, content in zip(VS.DIRECTION_LIST, self.check_walls_and_lim())}
+        #print(f"neighbors: {neighbors}")
         for position, content in neighbors.items():
             actual_position = self.calculate_position(position[0], position[1])
             if actual_position not in self.map.keys():
@@ -97,8 +98,9 @@ class Explorer(AbstAgent):
                 back_to = self.move_stack.pop()
                 comeback = self.calculate_dx_dy(back_to)
                 # If there is no clear and unvisited position, walk to the last position
-                print(self.current_position)
+                print(f"current pos: {self.current_position}")
                 self.current_position = back_to
+                print(f"coming back to: {self.current_position}")
                 print(self.walk(comeback[0], comeback[1]))
             except IndexError:
                 print('Returned to base')
