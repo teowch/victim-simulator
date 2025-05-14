@@ -19,6 +19,7 @@ class VS:
     NO_VICTIM = -1
 
     # Possible results for the check_obstacles method
+    BASE = -2
     UNK = -1           # when the agent ignores (unknow)
     CLEAR = 0
     WALL = 1
@@ -45,4 +46,14 @@ class VS:
     VIC_COLOR_SEV3 = (255,255,51)
     VIC_COLOR_SEV4 = (128,255,0)
     VIC_COLOR_LIST = [VIC_COLOR_SEV1, VIC_COLOR_SEV2, VIC_COLOR_SEV3, VIC_COLOR_SEV4]
-    
+
+    DIRECTION_UP = (0, -1)
+    DIRECTION_UPRIGHT = (1, -1)
+    DIRECTION_RIGHT = (1, 0)
+    DIRECTION_DOWNRIGHT = (1, 1)
+    DIRECTION_DOWN = (0, 1)
+    DIRECTION_DOWNLEFT = (-1, 1)
+    DIRECTION_LEFT = (-1, 0)
+    DIRECTION_UPLEFT = (-1, -1)
+    DIRECTION_LIST = [DIRECTION_UP, DIRECTION_UPRIGHT, DIRECTION_RIGHT, DIRECTION_DOWNRIGHT,
+                        DIRECTION_DOWN, DIRECTION_DOWNLEFT, DIRECTION_LEFT, DIRECTION_UPLEFT]
