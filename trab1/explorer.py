@@ -54,7 +54,7 @@ class Explorer(AbstAgent):
             if self.current_position == (0,0):
                 self.send_map_to_rescuer()
             else:
-                self.send_map_to_rescuer({})
+                self.send_map_to_rescuer(True)
             print(f"{self.NAME} No more time to explore... invoking the rescuer")
             # self.resc.go_save_victims([],[])
             return False
@@ -126,7 +126,7 @@ class Explorer(AbstAgent):
                     victims.append(k)
 
         self.main_map.sync_map(self.map)
-        # self.resc.go_save_victims(walls,victims)
+        self.resc.go_save_victims(walls,victims)
         print('map sent to rescuer')
 
     def calculate_position(self, dx, dy):

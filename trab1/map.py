@@ -4,13 +4,13 @@ import numpy as np
 class Map:
     def __init__(self):
         self.map = {}
+        self.found_victims = 0
 
     def sync_map(self, map):
         """
         Sync the map with the given map data.
         :param self.map: A dictionary containing the map data.
         """
-        print('here')
         for key, value in map.items():
             print('Key: ', key)
             print('Value: ', value)
@@ -20,8 +20,8 @@ class Map:
                 if 'has_victim' in value.keys():
                     self.map[key].update(value)
         print('Map synced')
-        print(self.map)
-        self.plot_map()
+        # print(self.map)
+        # self.plot_map()
 
     def get_map(self):
         """
@@ -34,6 +34,7 @@ class Map:
         """
         Plot the map using matplotlib.
         """
+        n_victims = 0
 
         # Encontrar limites
         xs, ys = zip(*self.map.keys())
@@ -56,10 +57,13 @@ class Map:
                 symbol = '#'
             elif info.get('has_victim', -1) != -1:
                 symbol = f"V{info['has_victim']}"
+                n_victims += 1
             elif info.get('visited', False):
                 symbol = '.'
 
             grid[gy][gx] = symbol
+        
+        print('Víctims Found:', n_victims)
 
         # Criar uma matriz para imshow (não afeta a visualização dos textos)
         bg = [[0 if cell == ' ' else 1 for cell in row] for row in grid]

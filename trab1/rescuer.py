@@ -58,7 +58,7 @@ class Rescuer(AbstAgent):
 
         # No more actions to do
         if self.plan == []:  # empty list, no more actions to do
-           input(f"{self.NAME} has finished the plan [ENTER]")
+        #    input(f"{self.NAME} has finished the plan [ENTER]")
            return False
 
         # Takes the first action of the plan (walk action) and removes it from the plan
@@ -74,7 +74,7 @@ class Rescuer(AbstAgent):
             if seq != VS.NO_VICTIM:
                 res = self.first_aid() # True when rescued
 
-        input(f"{self.NAME} remaining time: {self.get_rtime()} Tecle enter")
+        # input(f"{self.NAME} remaining time: {self.get_rtime()} Tecle enter")
 
         return True
 
