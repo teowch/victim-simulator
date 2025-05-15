@@ -13,7 +13,7 @@ from vs.constants import VS
 
 
 class Explorer(AbstAgent):
-    def __init__(self, env, config_file, resc, direction_tendency):
+    def __init__(self, env, map, config_file, resc, direction_tendency):
         """ Construtor do agente random on-line
         @param env referencia o ambiente
         @config_file: the absolute path to the explorer's config file
@@ -21,6 +21,7 @@ class Explorer(AbstAgent):
         """
         super().__init__(env, config_file)
         self.set_state(VS.ACTIVE)
+        self.main_map = map
         self.map = {(0, 0): {'content': VS.BASE, 'visited': True}} # map of the environment
         self.current_position = (0, 0) # current position of the agent in the environment
         self.move_stack = [self.current_position] # stack of moves executed
@@ -50,6 +51,10 @@ class Explorer(AbstAgent):
         if self.get_rtime() <= 1.0:
             # time to wake up the rescuer
             # pass the walls and the victims (here, they're empty)
+            if self.current_position == (0,0):
+                self.send_map_to_rescuer()
+            else:
+                self.send_map_to_rescuer({})
             print(f"{self.NAME} No more time to explore... invoking the rescuer")
             # self.resc.go_save_victims([],[])
             return False
@@ -106,18 +111,23 @@ class Explorer(AbstAgent):
                 return False
         return True
     
-    def send_map_to_rescuer(self):
+    def send_map_to_rescuer(self, dead=False):
+        if dead:
+            self.main_map.sync_map({})
+            return
+
         victims = []
         walls = []
         for k, v in self.map.items():
             if v['content'] == VS.WALL or v['content'] == VS.END:
                 walls.append(k)
-            elif v['has_victim'] != VS.NO_VICTIM:
-                victims.append(k)
+            elif 'has_victim' in v.keys():
+                if v['has_victim'] != VS.NO_VICTIM:
+                    victims.append(k)
 
-        self.resc.go_save_victims(walls,victims)
+        self.main_map.sync_map(self.map)
+        # self.resc.go_save_victims(walls,victims)
         print('map sent to rescuer')
-        return False
 
     def calculate_position(self, dx, dy):
         """

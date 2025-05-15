@@ -9,28 +9,30 @@ from vs.environment import Env
 from explorer import Explorer
 from rescuer import Rescuer
 from pathlib import Path
+from map import Map
 
 def main(data_folder_name, cfg_ag_folder):
       
     # Instantiate the environment
     env = Env(data_folder)
+    map = Map()
     
     # config files for the agents
     rescuer_file = os.path.join(cfg_ag_folder, "rescuer_1_config.txt")
     explorer_file = os.path.join(cfg_ag_folder, "explorer_1_config.txt")
     
     # Instantiate agents rescuer and explorer
-    resc1 = Rescuer(env, 4, rescuer_file)
-    resc2 = Rescuer(env, 4, rescuer_file)
-    resc3 = Rescuer(env, 4, rescuer_file)
-    resc4 = Rescuer(env, 4, rescuer_file)
+    resc1 = Rescuer(env, rescuer_file)
+    resc2 = Rescuer(env, rescuer_file)
+    resc3 = Rescuer(env, rescuer_file)
+    resc4 = Rescuer(env, rescuer_file)
 
     # Explorer needs to know rescuer to send the map
     # that's why rescuer is instatiated before
-    exp1 = Explorer(env, explorer_file, resc1, VS.DIRECTION_UP)
-    exp2 = Explorer(env, explorer_file, resc2, VS.DIRECTION_RIGHT)
-    exp3 = Explorer(env, explorer_file, resc3, VS.DIRECTION_DOWN)
-    exp4 = Explorer(env, explorer_file, resc4, VS.DIRECTION_LEFT)
+    exp1 = Explorer(env, map, explorer_file, resc1, VS.DIRECTION_UP)
+    exp2 = Explorer(env, map, explorer_file, resc2, VS.DIRECTION_RIGHT)
+    exp3 = Explorer(env, map, explorer_file, resc3, VS.DIRECTION_DOWN)
+    exp4 = Explorer(env, map, explorer_file, resc4, VS.DIRECTION_LEFT)
 
     # Run the environment simulator
     env.run()
