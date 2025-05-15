@@ -29,10 +29,10 @@ def main(data_folder_name, cfg_ag_folder):
 
     # Explorer needs to know rescuer to send the map
     # that's why rescuer is instatiated before
-    exp1 = Explorer(env, map, explorer_file, resc1, VS.DIRECTION_UP)
-    exp2 = Explorer(env, map, explorer_file, resc2, VS.DIRECTION_RIGHT)
-    exp3 = Explorer(env, map, explorer_file, resc3, VS.DIRECTION_DOWN)
-    exp4 = Explorer(env, map, explorer_file, resc4, VS.DIRECTION_LEFT)
+    exp1 = Explorer(env, map, explorer_file, resc1, VS.DIRECTION_UPRIGHT)
+    exp2 = Explorer(env, map, explorer_file, resc2, VS.DIRECTION_DOWNRIGHT)
+    exp3 = Explorer(env, map, explorer_file, resc3, VS.DIRECTION_DOWNLEFT)
+    exp4 = Explorer(env, map, explorer_file, resc4, VS.DIRECTION_UPLEFT)
 
     # Run the environment simulator
     env.run()
